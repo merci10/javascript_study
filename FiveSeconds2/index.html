@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Five Seconds2</title>
+	<style>
+	  body {
+	  	font-family: 'Courier New', sans-serif;
+	  	text-align: center;
+	  	font-size: 30px;
+	  	font-weight: bold;
+	  }
+	  .container {
+	  	margin: 50px  auto 0;
+	  	width: 300px;
+	  }
+	  #target, #result {
+	  	background: #ccc;
+	  	margin-bottom: 10px;
+	  	height: 50px;
+	  	line-height: 50px;
+	  }
+	  #result.red {
+	  	background: #f44336;
+	  }
+	  #result.gold {
+	  	background: #FFFF00;
+	  	color: #fff;
+	  }
+	  #result.white {
+	  	background: white;
+	  	color: black;
+	  }
+	  #start, #stop {
+	  	cursor: pointer;
+	  	font-size: 18px;
+	  	background: #EEEEEE;
+	  	width: 140px;
+	  	height: 30px;
+	  	line-height: 30px;
+	  	box-shadow: 0 5px 0 #cccccc;
+	  }
+	  #start {
+	  	float: left;
+	  }
+	  #stop {
+	  	float: right;
+	  }
+	  #start.pushed, #stop.pushed{
+	  	margin-top: 3px;
+	  	box-shadow: 0 2px 0 #cccccc;
+	  }
+	  .green {
+	  	background: #fff;
+	  }
+	</style>
+</head>
+<body>
+  <div class="container">
+    <div id="target" class="element">5.000</div>
+    <div id="result" class="element">0.000</div>
+    <div id="start" class="element">Start</div>
+    <div id="stop" class="element">Stop</div>
+  </div>
+  <script>
+  	(function () {
+  		'use strict';
+
+  		var elements = document.getElementsByClassName( "element" ) ;
+
+  		var target = document.getElementById('target');
+  		var result = document.getElementById('result');
+  		var startButton = document.getElementById('start');
+  		var stopButton = document.getElementById('stop');
+
+  		var startTime;
+  		var isStarted = false;
+
+  		var i = 0;
+
+  		startButton.addEventListener('click', function() {
+  			if (isStarted) return;
+  			isStarted = true;
+
+  			// for (var n = 0; n < elements.length; n++) {
+  			// 	elements[n].style.color = 'white';
+  			// }
+
+  			i = 0;
+
+  			this.className = 'pushed';
+  			stopButton.className = '';
+  			result.className = '';
+
+  			result.innerHTML = '0.000';
+  			startTime = Date.now();
+  		});
+
+  		stopButton.addEventListener('click', function() {
+  			var elapsedTime;
+  			var diff;
+
+  			if (!isStarted) return;
+  			isStarted = false;
+
+  			startButton.className = '';
+  			this.className = 'pushed';
+
+  			elapsedTime = (Date.now() - startTime) / 1000;
+  			// elapsedTime = 5.0;
+  			result.innerHTML = elapsedTime.toFixed(3);
+
+  			diff = Math.abs(elapsedTime - 5.0);
+  			if (diff <= 0.1) {
+  				changeColor();
+  			} else if (diff <= 0.5) {
+  				result.className = 'red';
+  			}
+  		});
+
+  		function changeColor() {
+  			if (result.className === '' || result.className === 'white') {
+  					result.className = 'gold';
+  				} else {
+  					result.className = 'white';
+  				}
+  				i ++;
+  			var tid = setTimeout(function() {
+  				changeColor();
+  			}, 200);
+  			if (i > 10) {
+  				clearTimeout(tid);
+  			}
+  		}
+  	})();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

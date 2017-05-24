@@ -1,0 +1,35 @@
+@charset "UTF-8"
+
+body {
+	text-align: center;
+	font-family: Arial, sans-serif;
+}
+
+#btn {
+	margin: 100px auto;
+	background: #e53935;
+	border-radius: 125px;
+	height: 250px;
+	width: 250px;
+	box-shadow: 0 10px 0 #c62828;
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+#btn:hover {
+	opacity: 1.0;
+}
+
+#btn.pushed {
+	box-shadow: 0 3px 0 #c62828;
+	margin-top: 107px;
+}
+
+#result {
+	font-size: 70px;
+	font-weight: bold;
+	color: #fff;
+	line-height: 250px;
+	text-align: center;
+	user-select: none;
+}

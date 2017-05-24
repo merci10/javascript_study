@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="urf-8">
+  <title>StopWatch</title>
+  <style>
+    body {
+    	background: #e0e0e0;
+    	font-family: Arial, sans-serif;
+    	text-align: center;
+    }
+    #timerText {
+    	color: #00aaff;
+    	font-size: 128px;
+    	margin: 40px auto;
+    	text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5);
+    }
+    .btn {
+    	display: inline-block;
+    	width: 100px;
+    	padding: 7px;
+    	border-radius: 5px;
+    	box-shadow: 0 4px 0 #0088cc;
+    	color: #fff;
+    	background: #00aaff;
+    	cursor: pointer;
+    	user-select: none;
+    }
+    .btn + .btn {
+    	margin-left: 10px;
+    }
+    .btn.active {
+    	opacity: 1.0;
+    }
+    .btn.inactive {
+    	opacity: 0.5;
+    	cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div id="timerText">0.00</div>
+  <div id="start">START</div>
+  <div id="stop">STOP</div>
+  <div id="reset">RESET</div>
+  <script>
+  	/* 
+		var i = 0;
+		function show() {
+	    console.log(i++);
+		}
+
+	　指定した時間ごとに繰り返す
+		setInterval(function() {
+		  show();
+		}, 1000);
+
+		指定した時間後に１度実行する
+		setTimeout(function() {
+			show();
+		}, 1000);
+		
+		function show() {
+			console.log(i++);
+			setTimeout(function() {
+				show();
+			}, 1000);
+		}
+		show();
+
+		止めるのも含む
+		function show() {
+			console.log(i++);
+			var tid = setTimeout(function() {
+				show();
+			}, 1000);
+			if (i > 10) {
+				clearTimeout(tid);
+			}
+		}
+		show();
+  	*/
+  	(function() {
+  		'use strict';
+
+  		var startTime;
+  		var timerId;
+  		var elapsedTime = 0;
+  		var isRunning = false;
+
+  		var startButton = document.getElementById('start');
+  		var stopButton = document.getElementById('stop');
+  		var resetButton = document.getElementById('reset');
+  		var timerText = document.getElementById('timerText');
+
+  		function setButtonState(start, stop, reset) {
+  			startButton.className = start ? 'btn active' : 'btn inactive';
+  			stopButton.className = stop ? 'btn active' : 'btn inactive';
+  			resetButton.className = reset ? 'btn active' : 'btn inactive';
+  		}
+
+  		setButtonState(true, false, false);
+
+  		startButton.addEventListener('click', function() {
+  			if (isRunning) return;
+  			isRunning = true;
+  			startTime = Date.now(); // 1970/1/1 00:00:00からの経過ミリ秒
+  			updateTimerText();
+  			setButtonState(false, true, false);
+  		});
+
+  		stopButton.addEventListener('click', function() {
+  			if (!isRunning) return;
+  			isRunning = false;
+  			elapsedTime += Date.now() - startTime;
+  			clearTimeout(timerId);
+  			setButtonState(true, false, true);
+  		});
+
+  		resetButton.addEventListener('click', function() {
+  			if (isRunning) return;
+  			isRunning = false;
+  			timerText.innerHTML = '0.00';
+  			elapsedTime = 0;
+  			setButtonState(true, false, false);
+  		});
+
+  		function updateTimerText() {
+  			timerId = setTimeout(function() {
+  				var t = Date.now() - startTime + elapsedTime;
+  				timerText.innerHTML = (t / 1000).toFixed(2);
+  				updateTimerText();
+  			}, 10);
+  		}
+  	})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Change color</title>
+  <style>
+    body {
+    	font-size: 16px;
+    	text-align: center;
+    	font-family: Arial, sans-serif;
+    	margin-top: 80px;
+    }
+    div {
+    	display: inline-block;
+    	background: #eee;
+    	padding: 5px 20px;
+    	cursor: pointer;
+    	user-select: none;
+    }
+    .pushed {
+    	color: #fff;
+    }
+    #red.pushed {
+    	background: red;
+    }
+    #green.pushed {
+    	background: green;
+    }
+    #yellow.pushed {
+    	background: yellow;
+    }
+    #green {
+    	margin: 0 15px;
+    }
+  </style>
+</head>
+<body>
+		<div id="red">Red</div>
+		<div id="green">Green</div>
+		<div id="yellow">Yellow</div>
+		<script>
+		  (function() {
+		  	'use strict';
+
+		  	var red = document.getElementById('red');
+		  	var green = document.getElementById('green');
+		  	var yellow = document.getElementById('yellow');
+
+		  	red.addEventListener('click', function() {
+		  		var className = this.classList.contains('pushed');
+		  		if (className) {
+		  			this.className = '';
+		  		} else {
+		  			this.className = 'pushed';
+		  		}
+		  	});
+		  	green.addEventListener('click', function() {
+					var className = this.classList.contains('pushed');
+		  		if (className) {
+		  			this.className = '';
+		  		} else {
+		  			this.className = 'pushed';
+		  		}		  	
+		  	});
+		  	yellow.addEventListener('click', function() {
+		  		var className = this.classList.contains('pushed');
+		  		if (className) {
+		  			this.className = '';
+		  		} else {
+		  			this.className = 'pushed';
+		  		}
+		  	});
+		  })();
+		</script>
+</body>
+</html>
